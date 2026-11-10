@@ -24,7 +24,12 @@ a{color:inherit}h1,h2,h3,h4{font-family:var(--display);font-weight:400;line-heig
 .logo .a{color:#fff}.logo .b{color:var(--brand-yellow)}
 .btn{display:inline-flex;align-items:center;font-weight:700;border:2px solid var(--ink);border-radius:8px;padding:8px 14px;text-decoration:none;background:var(--marker);color:var(--marker-ink);box-shadow:3px 3px 0 var(--ink);white-space:nowrap}
 .crumb{font-size:.85rem;color:var(--ink-soft);padding-top:18px}.crumb a{color:var(--ink-soft)}
-.hero{padding-block:14px 26px;display:grid;gap:10px}
+.hero{padding-block:14px 26px;display:grid;gap:10px;position:relative;isolation:isolate}
+.hero>*{position:relative;z-index:1}
+.wm{position:absolute!important;z-index:0!important;right:-2%;top:50%;transform:translateY(-50%) rotate(-7deg) skewX(-9deg);font-family:var(--display);font-size:clamp(4.5rem,15vw,11rem);line-height:1;white-space:nowrap;letter-spacing:-.02em;color:var(--marker);opacity:.32;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;pointer-events:none;user-select:none;max-width:100%;overflow:hidden}
+:root[data-theme="dark"] .wm{opacity:.18}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wm{opacity:.18}}
+@media (max-width:700px){.wm{right:-6%;opacity:.22}}
 .eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;color:var(--red);text-transform:uppercase}
 h1{font-size:clamp(2rem,5vw,3.2rem)}
 .tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{font-size:.82rem;border:1.5px solid var(--ink);border-radius:999px;padding:1px 10px;background:var(--card)}
@@ -62,6 +67,7 @@ footer{border-top:2px solid var(--ink);padding-block:20px;font-size:.85rem;color
 <main class="wrap">
   <nav class="crumb"><a href="../index.html">첫내신랩</a> › <a href="../index.html#schools">대비 가능 학교</a> › 서울 › 휘문고</nav>
   <div class="hero">
+    <div class="wm" aria-hidden="true">휘문고</div>
     <p class="eyebrow">서울특별시 · 자사고</p>
     <h1>휘문고 내신 대비</h1>
     <div class="tags"><span>사립</span><span>남학교</span><span>자율고</span></div>
@@ -100,8 +106,8 @@ footer{border-top:2px solid var(--ink);padding-block:20px;font-size:.85rem;color
   </section>
 
   <section class="blk" id="near"><h2>비슷한 학교</h2>
-    <h3 style="font-size:1.1rem;margin-bottom:8px">서울 자사고</h3><div class="chips"><span>하나고</span><span>경희고</span><span>배재고</span><span>보인고</span><span>선덕고</span><span>세화고</span><span>세화여고</span><span>신일고</span></div>
-    <h3 style="font-size:1.1rem;margin:14px 0 8px">서울의 다른 학교</h3><div class="chips"><span>대원외고</span><span>대일외고</span><span>명덕외고</span><span>서울외고</span><span>이화외고</span><span>한영외고</span></div>
+    <h3 style="font-size:1.1rem;margin-bottom:8px">서울 자사고</h3><div class="chips"><a href="%ED%95%98%EB%82%98%EA%B3%A0.html">하나고</a><a href="%EA%B2%BD%ED%9D%AC%EA%B3%A0.html">경희고</a><a href="%EB%B0%B0%EC%9E%AC%EA%B3%A0.html">배재고</a><a href="%EB%B3%B4%EC%9D%B8%EA%B3%A0.html">보인고</a><a href="%EC%84%A0%EB%8D%95%EA%B3%A0.html">선덕고</a><a href="%EC%84%B8%ED%99%94%EA%B3%A0.html">세화고</a><a href="%EC%84%B8%ED%99%94%EC%97%AC%EA%B3%A0.html">세화여고</a><a href="%EC%8B%A0%EC%9D%BC%EA%B3%A0.html">신일고</a></div>
+    <h3 style="font-size:1.1rem;margin:14px 0 8px">서울의 다른 학교</h3><div class="chips"><a href="%EB%8C%80%EC%9B%90%EC%99%B8%EA%B3%A0.html">대원외고</a><a href="%EB%8C%80%EC%9D%BC%EC%99%B8%EA%B3%A0.html">대일외고</a><a href="%EB%AA%85%EB%8D%95%EC%99%B8%EA%B3%A0.html">명덕외고</a><a href="%EC%84%9C%EC%9A%B8%EC%99%B8%EA%B3%A0.html">서울외고</a><a href="%EC%9D%B4%ED%99%94%EC%99%B8%EA%B3%A0.html">이화외고</a><a href="%ED%95%9C%EC%98%81%EC%99%B8%EA%B3%A0.html">한영외고</a></div>
   </section>
 
   <div class="cta"><div><h2>휘문고 1학기 중간고사 대비 상담</h2><p>학교 시간표와 시험 범위에 맞춘 겨울방학 계획을 보내드립니다.</p></div><div class="phone">010-5551-6230</div></div>
