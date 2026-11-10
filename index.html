@@ -673,17 +673,23 @@ footer .wrap{display:grid;gap:6px}
         </div>
         <div class="row2">
           <label for="f-school">목표·배정 고등학교<input id="f-school" name="school" placeholder="예: OO고등학교"></label>
-          <label for="f-phone">연락처<input id="f-phone" name="phone" inputmode="tel" placeholder="010-1234-5678"></label>
+          <label for="f-phone">학부모 연락처 *<input id="f-phone" name="phone" inputmode="tel" placeholder="010-1234-5678"></label>
         </div>
         <fieldset style="border:none;padding:0;margin:0;display:grid;gap:8px">
-          <legend style="font-weight:700;font-size:.93rem;margin-bottom:6px">관심 있는 관리 (여러 개 선택)</legend>
+          <legend style="font-weight:700;font-size:.93rem;margin-bottom:6px">관심 있는 과목·관리 * (여러 개 선택)</legend>
           <div class="chips">
-            <label for="c1"><input type="checkbox" id="c1" value="1:1 과외" checked>1:1 과외</label>
-            <label for="c2"><input type="checkbox" id="c2" value="학습 코칭">학습 코칭</label>
-            <label for="c3"><input type="checkbox" id="c3" value="수행평가 관리">수행평가 관리</label>          </div>
+            <label for="c1"><input type="checkbox" id="c1" value="국어">국어</label>
+            <label for="c2"><input type="checkbox" id="c2" value="수학" checked>수학</label>
+            <label for="c3"><input type="checkbox" id="c3" value="영어">영어</label>
+            <label for="c4"><input type="checkbox" id="c4" value="과학">과학</label>
+            <label for="c5"><input type="checkbox" id="c5" value="사회">사회</label>
+            <label for="c6"><input type="checkbox" id="c6" value="코칭 / 자기주도학습 /공부습관 관리">코칭·공부습관 관리</label>
+            <label for="c7"><input type="checkbox" id="c7" value="수행평가">수행평가</label>
+          </div>
         </fieldset>
         <label for="f-msg">고민되는 점<textarea id="f-msg" name="msg" rows="3" placeholder="예: 수학 선행이 거의 안 되어 있어요"></textarea></label>
-        <button class="btn primary" type="submit">상담 내용 정리하기</button>
+        <button class="btn primary" type="submit" id="f-submit">상담 신청하기</button>
+        <p class="note" id="f-err" role="alert" hidden></p>
         <div class="done" id="done" hidden></div>
       </form>
     </div>
@@ -772,15 +778,30 @@ footer .wrap{display:grid;gap:6px}
     try{navigator.clipboard.writeText(num).then(ok,fail)}catch(e){fail()}
   });
 
-  // form → summary text
+  // form → 구글폼(첫내신랩 상담신청서)으로 바로 접수
+  var GFORM='https://docs.google.com/forms/d/e/1FAIpQLSe6hi9XLIJSyPtJPu_rtb-aDF7Hf95RLHZ9n-cabuPwpormGQ/formResponse';
+  var ENTRY={name:'entry.2085337540',grade:'entry.1456917571',school:'entry.184181342',phone:'entry.932142698',pick:'entry.1869550578',msg:'entry.325247080'};
   document.getElementById('form').addEventListener('submit',function(e){
     e.preventDefault();
     var v=function(id){return document.getElementById(id).value.trim()};
     var picks=[].slice.call(document.querySelectorAll('.chips input:checked')).map(function(x){return x.value});
-    var text='[내신대비 상담신청]\n학생: '+(v('f-name')||'-')+' / '+v('f-grade')+'\n목표·배정 학교: '+(v('f-school')||'-')+'\n연락처: '+(v('f-phone')||'-')+'\n관심: '+(picks.join(', ')||'-')+'\n고민: '+(v('f-msg')||'-');
-    var box=document.getElementById('done');
-    box.textContent=text+'\n\n위 내용을 복사해 '+document.getElementById('phone').textContent+' 로 문자 보내주시면 24시간 안에 연락드립니다.';
-    box.hidden=false;
+    var err=document.getElementById('f-err'), box=document.getElementById('done'), btn=document.getElementById('f-submit');
+    var miss=[]; if(!v('f-name'))miss.push('학생 이름'); if(!/\d{2,3}-?\d{3,4}-?\d{4}/.test(v('f-phone')))miss.push('학부모 연락처(숫자)'); if(!picks.length)miss.push('관심 있는 과목');
+    if(miss.length){err.textContent=miss.join(', ')+'을(를) 입력해 주세요.';err.hidden=false;return}
+    err.hidden=true;
+    var body=new URLSearchParams();
+    body.append(ENTRY.name,v('f-name')); body.append(ENTRY.grade,v('f-grade')); body.append(ENTRY.school,v('f-school'));
+    body.append(ENTRY.phone,v('f-phone')); picks.forEach(function(p){body.append(ENTRY.pick,p)}); body.append(ENTRY.msg,v('f-msg'));
+    btn.disabled=true; btn.textContent='접수 중…';
+    var phone=document.getElementById('phone').textContent;
+    fetch(GFORM,{method:'POST',mode:'no-cors',body:body}).then(function(){
+      box.textContent='상담 신청이 접수되었습니다. 남겨주신 연락처로 24시간 안에 연락드립니다.\n급하시면 '+phone+' 로 전화 주세요.';
+      box.hidden=false; document.getElementById('form').querySelectorAll('input:not([type=checkbox]),textarea').forEach(function(x){x.value=''});
+      btn.textContent='접수 완료';
+    }).catch(function(){
+      err.textContent='접수 중 문제가 생겼습니다. '+phone+' 로 전화나 문자로 신청해 주세요.'; err.hidden=false;
+      btn.disabled=false; btn.textContent='상담 신청하기';
+    });
   });
 })();
 </script>
