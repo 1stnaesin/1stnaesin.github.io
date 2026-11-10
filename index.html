@@ -262,6 +262,13 @@ section.block{padding-block:64px}
 .float-cta:hover{transform:translateY(-2px)}
 @media (max-width:420px){.float-cta svg{width:52px;height:52px}.float-cta span{font-size:1rem;padding:8px 14px 8px 22px}}
 
+.adm-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.adm-grid a{background:var(--card);border:2px solid var(--ink);border-radius:10px;padding:16px;text-decoration:none;display:grid;gap:6px;box-shadow:4px 4px 0 var(--ink);transition:transform .12s}
+.adm-grid a:hover{transform:translate(-2px,-2px)}
+.adm-grid b{font-family:var(--display);font-weight:400;font-size:1.4rem;color:var(--blue)}
+.adm-grid span{font-size:.88rem;color:var(--ink-soft)}
+@media (max-width:820px){.adm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* faq */
 .faq{display:grid;gap:10px;max-width:820px}
 .faq details{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:0 18px}
@@ -315,6 +322,7 @@ footer .wrap{display:grid;gap:6px}
       <a href="#grade">학년별 로드맵</a>
       <a href="#subjects">과목</a>
       <a href="#reform">2028 대입개편</a>
+      <a href="admission/index.html">대입·논술</a>
       <a href="#service">수업·코칭</a>
       <a href="#midterm">1학기 중간고사</a>
       <a href="#schools">대비 가능 학교</a>
@@ -553,6 +561,23 @@ footer .wrap{display:grid;gap:6px}
           <div class="fact"><b>고교학점제 전면 시행</b><span>과목별로 학업성취율과 출석 기준을 채워야 학점을 이수합니다. 수행평가 비중이 커진 이유입니다.</span></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="block" id="admission" style="padding-bottom:8px">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">2028 대입 · 내신에서 논술까지</p>
+        <h2>내신은 대입 4개 전형 모두로 이어집니다</h2>
+        <p>2028학년도 수도권 대학은 학생부교과를 줄이고 학생부종합(+1,724명)과 논술(+413명)을 늘렸습니다. 정시에서도 학생부를 보는 대학이 늘고 있습니다. 전형별로 무엇을 준비해야 하는지 정리했습니다.</p>
+      </div>
+      <div class="adm-grid">
+        <a href="admission/학생부교과.html"><b>학생부교과</b><span>내신 등급 중심 · 수능최저로 변별</span></a>
+        <a href="admission/학생부종합.html"><b>학생부종합</b><span>세특·수행평가·진로 일관성 · 가장 늘어난 전형</span></a>
+        <a href="admission/논술.html"><b>논술</b><span>인문·수리·약술형 · 다시 늘어나는 전형</span></a>
+        <a href="admission/정시.html"><b>정시</b><span>통합형 수능 · 학생부 반영 확대</span></a>
+      </div>
+      <p style="margin-top:14px"><a class="btn" href="admission/index.html">2028 대입 한눈에 보기 →</a></p>
     </div>
   </section>
 
