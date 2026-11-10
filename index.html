@@ -222,6 +222,12 @@ section.block{padding-block:64px}
 .subj tbody tr:last-child th,.subj tbody tr:last-child td{border-bottom:none}
 .subj b{background:linear-gradient(transparent 58%,var(--marker) 58%);font-weight:700}
 .subj small{display:block;color:var(--ink-soft);font-size:.8rem;margin-top:4px}
+.subj-links{margin-top:18px;background:var(--card);border:2px solid var(--ink);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.subj-links>b{font-family:var(--display);font-weight:400;font-size:1.25rem}
+.subj-links div{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.subj-links .k{font-size:.8rem;font-weight:700;color:var(--red);width:40px}
+.subj-links a{font-size:.9rem;font-weight:700;color:var(--blue);text-decoration:none;border:1.5px solid var(--blue);border-radius:999px;padding:3px 12px}
+.subj-links a:hover{background:var(--blue);color:var(--card)}
 .subj-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
 .subj-notes div{background:var(--card);border-left:4px solid var(--red);padding:14px 16px;border-radius:0 8px 8px 0;font-size:.92rem;color:var(--ink-soft);min-width:0}
 .subj-notes b{display:block;color:var(--ink);font-size:1rem;margin-bottom:2px}
@@ -502,6 +508,12 @@ footer .wrap{display:grid;gap:6px}
             <tr><th>제2외국어<br><small>한문 포함</small></th><td>—</td><td>일본어, 중국어, 독일어, 프랑스어, 스페인어, 러시아어, 아랍어, 베트남어, 한문<small>보통 2학년부터 개설, 학교마다 개설 언어가 다름</small></td><td>각 언어 회화·문화 과목, 한문 고전 읽기</td></tr>
           </tbody>
         </table>
+      </div>
+      <div class="subj-links">
+        <b>과목별 선행·내신 대비</b>
+        <div><span class="k">수학</span><a href="subject/공통수학1.html">공통수학1</a><a href="subject/공통수학2.html">공통수학2</a><a href="subject/대수.html">대수</a><a href="subject/미적분1.html">미적분Ⅰ</a><a href="subject/확률과-통계.html">확률과 통계</a><a href="subject/미적분2.html">미적분Ⅱ</a><a href="subject/기하.html">기하</a><a href="subject/경제-수학.html">경제 수학</a><a href="subject/인공지능-수학.html">인공지능 수학</a></div>
+        <div><span class="k">과학</span><a href="subject/통합과학.html">통합과학</a><a href="subject/물리학.html">물리학</a><a href="subject/화학.html">화학</a><a href="subject/생명과학.html">생명과학</a><a href="subject/지구과학.html">지구과학</a></div>
+        <div><span class="k">사회</span><a href="subject/통합사회.html">통합사회</a></div>
       </div>
       <div class="subj-notes">
         <div><b>1학년 · 공통과목 집중</b>공통국어·공통수학·공통영어·통합사회·통합과학·한국사. 모두 5등급 상대평가라 첫 시험부터 등급이 남습니다.</div>
