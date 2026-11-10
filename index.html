@@ -282,7 +282,10 @@ input,select,textarea{font:inherit;font-weight:400;padding:10px 12px;border:1.5p
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips label{display:flex;align-items:center;gap:6px;font-weight:400;border:1.5px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer}
 .chips input{width:auto}
-.done{background:var(--paper);border:1.5px dashed var(--ink);border-radius:8px;padding:14px;font-size:.92rem;white-space:pre-wrap}
+.done{background:var(--marker);color:var(--marker-ink);border:2px solid var(--ink);border-radius:8px;padding:14px 16px;font-size:1rem;font-weight:700;white-space:pre-wrap}
+.form-err{background:var(--red);color:#FFFFFF;border-radius:8px;padding:12px 14px;font-weight:700;margin:0}
+.float-cta.away{opacity:0;pointer-events:none;transform:translateY(20px)}
+.float-cta{transition:opacity .2s,transform .2s}
 @media (max-width:820px){.contact{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
 
 footer{border-top:2px solid var(--ink);padding-block:28px;font-size:.85rem;color:var(--ink-soft);background:var(--paper)}
@@ -689,7 +692,7 @@ footer .wrap{display:grid;gap:6px}
         </fieldset>
         <label for="f-msg">고민되는 점<textarea id="f-msg" name="msg" rows="3" placeholder="예: 수학 선행이 거의 안 되어 있어요"></textarea></label>
         <button class="btn primary" type="submit" id="f-submit">상담 신청하기</button>
-        <p class="note" id="f-err" role="alert" hidden></p>
+        <p class="form-err" id="f-err" role="alert" hidden></p>
         <div class="done" id="done" hidden></div>
       </form>
     </div>
@@ -778,6 +781,13 @@ footer .wrap{display:grid;gap:6px}
     try{navigator.clipboard.writeText(num).then(ok,fail)}catch(e){fail()}
   });
 
+  // 상담 신청 칸이 화면에 보이면 떠 있는 상담 버튼을 숨겨 신청 버튼을 가리지 않게 함
+  (function(){
+    var fc=document.querySelector('.float-cta'), ct=document.getElementById('contact');
+    if(!fc||!ct||!('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function(es){fc.classList.toggle('away',es[0].isIntersecting)},{threshold:0.05}).observe(ct);
+  })();
+
   // form → 구글폼(첫내신랩 상담신청서)으로 바로 접수
   var GFORM='https://docs.google.com/forms/d/e/1FAIpQLSe6hi9XLIJSyPtJPu_rtb-aDF7Hf95RLHZ9n-cabuPwpormGQ/formResponse';
   var ENTRY={name:'entry.2085337540',grade:'entry.1456917571',school:'entry.184181342',phone:'entry.932142698',pick:'entry.1869550578',msg:'entry.325247080'};
@@ -787,7 +797,7 @@ footer .wrap{display:grid;gap:6px}
     var picks=[].slice.call(document.querySelectorAll('.chips input:checked')).map(function(x){return x.value});
     var err=document.getElementById('f-err'), box=document.getElementById('done'), btn=document.getElementById('f-submit');
     var miss=[]; if(!v('f-name'))miss.push('학생 이름'); if(!/\d{2,3}-?\d{3,4}-?\d{4}/.test(v('f-phone')))miss.push('학부모 연락처(숫자)'); if(!picks.length)miss.push('관심 있는 과목');
-    if(miss.length){err.textContent=miss.join(', ')+'을(를) 입력해 주세요.';err.hidden=false;return}
+    if(miss.length){err.textContent='⚠ '+miss.join(', ')+'을(를) 입력해 주세요.';err.hidden=false;err.scrollIntoView({block:'center',behavior:'smooth'});return}
     err.hidden=true;
     var body=new URLSearchParams();
     body.append(ENTRY.name,v('f-name')); body.append(ENTRY.grade,v('f-grade')); body.append(ENTRY.school,v('f-school'));
@@ -796,7 +806,7 @@ footer .wrap{display:grid;gap:6px}
     var phone=document.getElementById('phone').textContent;
     fetch(GFORM,{method:'POST',mode:'no-cors',body:body}).then(function(){
       box.textContent='상담 신청이 접수되었습니다. 남겨주신 연락처로 24시간 안에 연락드립니다.\n급하시면 '+phone+' 로 전화 주세요.';
-      box.hidden=false; document.getElementById('form').querySelectorAll('input:not([type=checkbox]),textarea').forEach(function(x){x.value=''});
+      box.hidden=false; box.scrollIntoView({block:'center',behavior:'smooth'}); document.getElementById('form').querySelectorAll('input:not([type=checkbox]),textarea').forEach(function(x){x.value=''});
       btn.textContent='접수 완료';
     }).catch(function(){
       err.textContent='접수 중 문제가 생겼습니다. '+phone+' 로 전화나 문자로 신청해 주세요.'; err.hidden=false;
