@@ -822,7 +822,7 @@ footer .wrap{display:grid;gap:6px}
     var picks=[].slice.call(document.querySelectorAll('.chips input:checked')).map(function(x){return x.value});
     var err=document.getElementById('f-err'), box=document.getElementById('done'), btn=document.getElementById('f-submit');
     var miss=[]; if(!v('f-name'))miss.push('학생 이름'); if(!/\d{2,3}-?\d{3,4}-?\d{4}/.test(v('f-phone')))miss.push('학부모 연락처(숫자)'); if(!picks.length)miss.push('관심 있는 과목');
-    if(miss.length){err.textContent='⚠ '+miss.join(', ')+'을(를) 입력해 주세요.';err.hidden=false;err.scrollIntoView({block:'center',behavior:'smooth'});return}
+    if(miss.length){err.textContent='⚠ 아직 입력하지 않은 칸이 있습니다: '+miss.join(', ');err.hidden=false;err.scrollIntoView({block:'center',behavior:'smooth'});return}
     err.hidden=true;
     var body=new URLSearchParams();
     body.append(ENTRY.name,v('f-name')); body.append(ENTRY.grade,v('f-grade')); body.append(ENTRY.school,v('f-school'));
